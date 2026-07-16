@@ -18,6 +18,8 @@ Its main goal is to turn the scattered `FileManager` APIs into a consistent, rea
 - Recursively reading all regular files under a directory tree.
 - Supporting hidden file / hidden folder skipping.
 
+![Example](https://github.com/user-attachments/assets/ca932723-39e0-4f38-854a-ddbdb7f70318)
+
 ## 🚀 [Features](https://peterpanswift.github.io/iphone-bezels/)
 
 - Pure Foundation, no extra dependencies.

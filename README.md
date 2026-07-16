@@ -18,6 +18,8 @@
 - 遞迴讀取整個目錄樹下的所有一般檔案 URL / 檔案資訊
 - 支援略過隱藏檔案與隱藏資料夾
 
+![Example](https://github.com/user-attachments/assets/ca932723-39e0-4f38-854a-ddbdb7f70318)
+
 ## 🚀 [功能特色](https://peterpanswift.github.io/iphone-bezels/)
 - Pure Foundation，沒有額外依賴
 - `enum` 命名空間設計，API 乾淨
