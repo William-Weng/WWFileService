@@ -29,16 +29,26 @@ Its main goal is to turn the scattered `FileManager` APIs into a consistent, rea
 - Supports returning `FileItem`, which is convenient for direct UI binding.
 - Great for video lists, file explorers, media managers, and import flows.
 
-## 📦 API Table
+## 📦 API Overview
 
-| Function | Return Type | Scope | Filter | Description |
+### Folders
+
+| Name | Return | Depth | Filter | Description |
 |---|---|---|---|---|
-| `folderNames(at:skipsHiddenFiles:)` | `[String]` | First level | Folders only | Reads the first-level subfolder names under the specified directory and sorts them. |
-| `fileUrls(at:allowedExtensions:skipsHiddenFiles:)` | `[URL]` | First level | Regular files + extension | Reads file URLs that match the allowed extensions under the specified directory. |
-| `fileNames(at:allowedExtensions:skipsHiddenFiles:)` | `[String]` | First level | Regular files + extension | Reads file names that match the allowed extensions under the specified directory. |
-| `fileItems(at:allowedExtensions:skipsHiddenFiles:)` | `[FileItem]` | First level | Regular files + extension | Reads file metadata under the specified directory, including URL, creation date, and file size. |
-| `allFileUrls(at:skipsHiddenFiles:)` | `[URL]` | Recursive | Regular files | Recursively scans the directory and all subdirectories, returning all regular file URLs. |
-| `allFileItems(at:skipsHiddenFiles:)` | `[FileItem]` | Recursive | Regular files | Recursively scans the directory and all subdirectories, returning all regular file metadata. |
+| `folderUrls(at:skipsHiddenFiles:)` | `[URL]` | First level | Folders only | Reads the first-level subfolder URLs under the given folder and sorts them. |
+| `folderNames(at:skipsHiddenFiles:)` | `[String]` | First level | Folders only | Reads the first-level subfolder names under the given folder and sorts them. |
+| `fileUrls(at:allowedExtensions:skipsHiddenFiles:)` | `[URL]` | First level | Regular files + extensions | Reads file URLs under the given folder that match the given extensions. |
+| `fileNames(at:allowedExtensions:skipsHiddenFiles:)` | `[String]` | First level | Regular files + extensions | Reads file names under the given folder that match the given extensions. |
+| `fileItems(at:allowedExtensions:skipsHiddenFiles:)` | `[FileServiceItem]` | First level | Regular files + extensions | Reads file info under the given folder that match the given extensions, including URL, creation date, and file size. |
+| `allFileUrls(at:skipsHiddenFiles:)` | `[URL]` | Recursive | Regular files | Recursively scans the given folder and all subfolders, returning all regular file URLs. |
+| `allFileItems(at:skipsHiddenFiles:)` | `[FileServiceItem]` | Recursive | Regular files | Recursively scans the given folder and all subfolders, returning all regular file info. |
+
+### Video
+
+| Name | Return | Description |
+|---|---|---|
+| `videoThumbnail(for:at:maximumSize:preferredTimescale:toleranceBefore:toleranceAfter:)` | `UIImage` | Generates a thumbnail image from a video at a specific time. |
+| `videoInformation(for:)` | `VideoInfo` | Retrieves the video duration and its original size. |
 
 ## 🔍 Function Details
 

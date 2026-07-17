@@ -5,12 +5,13 @@
 //  Created by William.Weng on 2026/7/16.
 //
 
-import Foundation
+import UIKit
+import AVFoundation
 
 /// 檔案相關功能大集合
 public enum WWFileService {}
 
-// MARK: - 公開API
+// MARK: - 公開API (資料夾)
 public extension WWFileService {
     
     /// 取得指定資料夾底下「第一層子資料夾URL」
@@ -36,6 +37,10 @@ public extension WWFileService {
         try FileManager.default.directories(at: folderURL, skipsHiddenFiles: skipsHiddenFiles)
             .map { $0.lastPathComponent }
     }
+}
+
+// MARK: - 公開API (檔案)
+public extension WWFileService {
     
     /// 取得指定資料夾底下符合副檔名條件的檔案 URL。
     ///
@@ -126,5 +131,48 @@ public extension WWFileService {
     /// - Throws: 無法建立目錄列舉器時拋出錯誤
     static func allFileItems(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [FileServiceItem] {
         try FileManager.default.allFileItems(at: folderURL, skipsHiddenFiles: skipsHiddenFiles)
+    }
+}
+
+// MARK: - 公開API (影片)
+public extension WWFileService {
+    
+    /// 從影片取得縮圖
+    /// - Parameters:
+    ///   - url: 影片的 URL
+    ///   - valueType: 影片時間的表示方式（秒數或 CMTime）
+    ///   - maximumSize: 縮圖的最大尺寸
+    ///   - preferredTimescale: 建立時間點時使用的 timeScale（預設為 600）
+    ///   - toleranceBefore: 允許在指定時間點「之前」偏移的最大時間（預設為 .zero）
+    ///   - toleranceAfter: 允許在指定時間點「之後」偏移的最大時間（預設為 .zero）
+    /// - Returns: 對應時間點的縮圖
+    static func videoThumbnail(for url: URL, at valueType: TimeValueType, maximumSize: CGSize, preferredTimescale: CMTimeScale = 600, toleranceBefore: CMTime = .zero, toleranceAfter: CMTime = .zero) async throws -> UIImage {
+        
+        let generator = VideoThumbnailGenerator(url: url, maximumSize: maximumSize, preferredTimescale: preferredTimescale, toleranceBefore: toleranceBefore, toleranceAfter: toleranceAfter)
+                
+        switch valueType {
+        case .seconds(let seconds): return try await generator.thumbnail(at: seconds)
+        case .time(let time): return try await generator.thumbnail(at: time)
+        }
+    }
+    
+    /// 取得影片的長度與尺寸
+    /// - Parameter url: 影片的 URL
+    /// - Returns: 影片長度（秒）與尺寸 (像素)
+    static func videoInformation(for url: URL) async throws -> VideoInfo {
+        
+        let asset = AVURLAsset(url: url)
+        try await asset.load(.duration)
+        let tracks = try await asset.load(.tracks)
+        
+        guard let videoTrack = tracks.first(where: { $0.mediaType == .video }) else { throw VideoError.noVideoTrack }
+        
+        let naturalSize = try await videoTrack.load(.naturalSize)
+        let preferredTransform = try await videoTrack.load(.preferredTransform)
+        
+        let correctedSize = naturalSize.applying(preferredTransform)
+        let durationSeconds = CMTimeGetSeconds(asset.duration)
+        
+        return .init(durationSeconds: durationSeconds, size: correctedSize)
     }
 }

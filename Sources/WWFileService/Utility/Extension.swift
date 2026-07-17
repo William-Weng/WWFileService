@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 // MARK: - FileManager
 extension FileManager {
@@ -116,5 +117,30 @@ extension URL {
     ///   - nil：取值失敗或資源不存在
     var isDirectory: Bool?  {
         try? resourceValues(forKeys: [.isDirectoryKey]).isDirectory
+    }
+}
+
+// MARK: - AVAssetImageGenerator
+extension AVAssetImageGenerator {
+    
+    /// 建立 AVAssetImageGenerator
+    /// - Parameters:
+    ///   - url: 影片的 URL
+    ///   - appliesPreferredTrackTransform: 是否套用影片軌道的 transform
+    ///   - maximumSize: 縮圖的最大尺寸
+    ///   - toleranceBefore: 允許在指定時間點「之前」偏移的最大時間
+    ///   - toleranceAfter: 允許在指定時間點「之後」偏移的最大時間
+    /// - Returns: 對應時間點的縮圖
+    static func build(url: URL, appliesPreferredTrackTransform: Bool, maximumSize: CGSize, toleranceBefore: CMTime, toleranceAfter: CMTime) -> Self {
+        
+        let asset = AVURLAsset(url: url)
+        let generator = Self(asset: asset)
+        
+        generator.appliesPreferredTrackTransform = appliesPreferredTrackTransform
+        generator.maximumSize = maximumSize
+        generator.requestedTimeToleranceBefore = toleranceBefore
+        generator.requestedTimeToleranceAfter = toleranceAfter
+        
+        return generator
     }
 }
