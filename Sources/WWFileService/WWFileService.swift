@@ -13,6 +13,17 @@ public enum WWFileService {}
 // MARK: - 公開API
 public extension WWFileService {
     
+    /// 取得指定資料夾底下「第一層子資料夾URL」
+    ///
+    /// - Parameters:
+    ///   - folderURL: 目標資料夾
+    ///   - skipsHiddenFiles: 是否略過隱藏檔
+    /// - Returns: 子資料夾名稱陣列，已排序
+    /// - Throws: 讀取失敗時往外拋錯
+    static func folderUrls(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [URL] {
+        try FileManager.default.directories(at: folderURL, skipsHiddenFiles: skipsHiddenFiles)
+    }
+    
     /// 取得指定資料夾底下「第一層子資料夾名稱」
     ///
     /// - Parameters:
@@ -22,11 +33,8 @@ public extension WWFileService {
     /// - Throws: 讀取失敗時往外拋錯
     static func folderNames(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [String] {
         
-        let urls = try FileManager.default.directories(at: folderURL, skipsHiddenFiles: skipsHiddenFiles)
-        
-        return urls
+        try FileManager.default.directories(at: folderURL, skipsHiddenFiles: skipsHiddenFiles)
             .map { $0.lastPathComponent }
-            .sorted()
     }
     
     /// 取得指定資料夾底下符合副檔名條件的檔案 URL。
@@ -79,7 +87,7 @@ public extension WWFileService {
     ///   - skipsHiddenFiles: 是否略過隱藏檔
     /// - Returns: FileItem 陣列
     /// - Throws: 讀取失敗時往外拋錯
-    static func fileItems(at folderURL: URL, allowedExtensions: Set<String>, skipsHiddenFiles: Bool) throws -> [FileItem] {
+    static func fileItems(at folderURL: URL, allowedExtensions: Set<String>, skipsHiddenFiles: Bool) throws -> [FileServiceItem] {
         
         let keys: Set<URLResourceKey> = [.creationDateKey, .fileSizeKey, .isRegularFileKey]
         let extensions = Set(allowedExtensions.map { $0.lowercased() })
@@ -116,7 +124,7 @@ public extension WWFileService {
     ///   - skipsHiddenFiles: 是否略過隱藏檔案 / 隱藏資料夾
     /// - Returns: 該目錄以下所有一般檔案的 FileItem，並依檔名自然排序
     /// - Throws: 無法建立目錄列舉器時拋出錯誤
-    static func allFileItems(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [FileItem] {
+    static func allFileItems(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [FileServiceItem] {
         try FileManager.default.allFileItems(at: folderURL, skipsHiddenFiles: skipsHiddenFiles)
     }
 }

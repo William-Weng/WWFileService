@@ -24,6 +24,8 @@ extension FileManager {
         return try contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.isDirectoryKey], options: mask)
             .filter {
                 $0.isDirectory == true
+            }.sorted {
+                $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending
             }
     }
     
@@ -39,6 +41,9 @@ extension FileManager {
         
         let mask: DirectoryEnumerationOptions = skipsHiddenFiles ? [.skipsHiddenFiles] : []
         return try contentsOfDirectory(at: folderURL, includingPropertiesForKeys: keys, options: mask)
+            .sorted {
+                $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending
+            }
     }
         
     /// 遞迴讀取指定資料夾底下所有一般檔案 URL（包含所有子資料夾）
@@ -77,7 +82,7 @@ extension FileManager {
     ///   - skipsHiddenFiles: 是否略過隱藏檔案 / 隱藏資料夾
     /// - Returns: 該目錄以下所有一般檔案的 FileItem，並依檔名自然排序
     /// - Throws: 無法建立目錄列舉器時拋出錯誤
-    func allFileItems(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [FileItem] {
+    func allFileItems(at folderURL: URL, skipsHiddenFiles: Bool) throws -> [FileServiceItem] {
         
         let keys: Set<URLResourceKey> = [.isRegularFileKey, .creationDateKey, .fileSizeKey]
         let mask: DirectoryEnumerationOptions = skipsHiddenFiles ? [.skipsHiddenFiles] : []
