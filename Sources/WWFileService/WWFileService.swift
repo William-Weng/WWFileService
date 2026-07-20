@@ -84,6 +84,33 @@ public extension WWFileService {
         }
     }
     
+    /// 建立單一檔案的 `FileServiceItem` 描述物件
+    ///
+    /// 這個方法會：
+    /// 1. 依副檔名過濾，只保留指定 `allowedExtensions` 的檔案
+    /// 2. 讀取檔案的建立時間與大小等 metadata
+    /// 3. 僅接受一般檔案（排除資料夾、符號連結等）
+    ///
+    /// - Parameters:
+    ///   - url: 目標檔案的 URL
+    ///   - allowedExtensions: 允許的檔案副檔名集合（例如 ["mp4", "mov"]）
+    ///   - skipsHiddenFiles: 是否跳過隱藏檔（目前參數保留，實作可視需要擴充）
+    /// - Returns: 若符合條件，回傳對應的 `FileServiceItem`；否則回傳 `nil`
+    static func fileItem(at url: URL, allowedExtensions: Set<String>, skipsHiddenFiles: Bool) -> FileServiceItem? {
+        
+        let keys: Set<URLResourceKey> = [.creationDateKey, .fileSizeKey, .isRegularFileKey]
+        let extensions = Set(allowedExtensions.map { $0.lowercased() })
+        
+        guard extensions.contains(url.pathExtension.lowercased()),
+              let values = try? url.resourceValues(forKeys: keys),
+              values.isRegularFile != false
+        else {
+            return nil
+        }
+        
+        return .init(url: url, createdDate: values.creationDate, fileSize: Int64(values.fileSize ?? 0))
+    }
+    
     /// 取得指定資料夾底下符合條件的檔案資訊
     ///
     /// - Parameters:
@@ -95,19 +122,10 @@ public extension WWFileService {
     static func fileItems(at folderURL: URL, allowedExtensions: Set<String>, skipsHiddenFiles: Bool) throws -> [FileServiceItem] {
         
         let keys: Set<URLResourceKey> = [.creationDateKey, .fileSizeKey, .isRegularFileKey]
-        let extensions = Set(allowedExtensions.map { $0.lowercased() })
         let urls = try FileManager.default.files(at: folderURL, keys: Array(keys), skipsHiddenFiles: skipsHiddenFiles)
         
         return urls.compactMap { url in
-            
-            guard extensions.contains(url.pathExtension.lowercased()),
-                  let values = try? url.resourceValues(forKeys: keys),
-                  values.isRegularFile != false
-            else {
-                return nil
-            }
-            
-            return .init(url: url, createdDate: values.creationDate, fileSize: Int64(values.fileSize ?? 0))
+            fileItem(at: url, allowedExtensions: allowedExtensions, skipsHiddenFiles: skipsHiddenFiles)
         }
     }
     
