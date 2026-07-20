@@ -171,6 +171,32 @@ public extension WWFileService {
         try write(data, to: url)
     }
     
+    /// 從指定 URL 讀取原始資料
+    ///
+    /// - Parameter url: 檔案位置（通常為本地 file URL）
+    /// - Returns: 讀取到的 `Data`
+    /// - Throws: 當檔案不存在、無權限或讀取失敗時拋出錯誤
+    static func readData(from url: URL) throws -> Data {
+        try Data(contentsOf: url)
+    }
+    
+    /// 從指定 URL 讀取 JSON 並解碼成指定型別
+    ///
+    /// - Parameters:
+    ///   - type: 目標解碼型別（需符合 `Decodable`）
+    ///   - url: 檔案位置（通常為本地 JSON 檔）
+    ///   - decoder: 自訂 `JSONDecoder`（預設為新的實例）
+    /// - Returns: 解碼後的物件
+    /// - Throws:
+    ///   - 檔案讀取失敗（來自 `readData`）
+    ///   - JSON 結構不符或解碼失敗
+    ///
+    /// - Note: 可透過傳入自訂 `decoder` 設定日期格式、key decoding strategy 等
+    static func read<T: Decodable>(_ type: T.Type, from url: URL, decoder: JSONDecoder = JSONDecoder()) throws -> T {
+        let data = try readData(from: url)
+        return try decoder.decode(T.self, from: data)
+    }
+    
     /// 將檔案從原位置移動到新位置
     /// - Parameters:
     ///   - url: 原始檔案 URL
