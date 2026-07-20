@@ -50,6 +50,20 @@ Its main goal is to turn the scattered `FileManager` APIs into a consistent, rea
 | `videoThumbnail(for:at:maximumSize:preferredTimescale:toleranceBefore:toleranceAfter:)` | `UIImage` | Generates a thumbnail image from a video at a specific time. |
 | `videoInformation(for:)` | `VideoInfo` | Retrieves the video duration and its original size. |
 
+### CRUD
+| Name | Return | Description |
+|---|---|---|
+| `fileExists(at:)` | `Bool` | Checks whether a file or folder exists at the specified URL. |
+| `createDirectory(at:withIntermediateDirectories:)` | `Void` | Creates a directory at the specified URL. |
+| `write(_:to:)` | `Void` | Writes raw `Data` to the specified location. |
+| `write(_:to:encoder:)` | `Void` | Encodes an `Encodable` value and writes it as JSON. |
+| `readData(from:)` | `Data` | Reads raw data from the specified file. |
+| `read(_:from:decoder:)` | `T` | Reads and decodes a value of the specified type. |
+| `moveItem(at:to:)` | `Void` | Moves a file or folder to a new location. |
+| `renameItem(at:to:)` | `URL` | Renames a file and returns the new URL. |
+| `copyItem(at:to:)` | `Void` | Copies a file to the specified destination. |
+| `deleteItem(at:)` | `Void` | Deletes the specified file or folder. |
+
 ## 🔍 Function Details
 
 ### `folderNames(at:skipsHiddenFiles:)`

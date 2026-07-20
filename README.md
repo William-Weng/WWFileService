@@ -49,6 +49,21 @@
 | `videoThumbnail(for:at:maximumSize:preferredTimescale:toleranceBefore:toleranceAfter:)` | `UIImage` | 從影片取得縮圖。 |
 | `videoInformation(for:)` | `UIImage` | 取得影片的長度與尺寸。 |
 
+### CRUD
+
+| 名稱 | 回傳值 | 說明 |
+|---|---|---|
+| `fileExists(at:)` | `Bool` | 檢查指定路徑的檔案或資料夾是否存在。 |
+| `createDirectory(at:withIntermediateDirectories:)` | `Void` | 建立資料夾。 |
+| `write(_:to:)` | `Void` | 將 `Data` 寫入指定位置。 |
+| `write(_:to:encoder:)` | `Void` | 將 `Encodable` 物件編碼後寫入 JSON 檔。 |
+| `readData(from:)` | `Data` | 讀取指定檔案的原始資料。 |
+| `read(_:from:decoder:)` | `T` | 讀取並解碼指定型別。 |
+| `moveItem(at:to:)` | `Void` | 將檔案或資料夾移動到新位置。 |
+| `renameItem(at:to:)` | `URL` | 重新命名檔案，並回傳新的 URL。 |
+| `copyItem(at:to:)` | `Void` | 複製檔案到指定位置。 |
+| `deleteItem(at:)` | `Void` | 刪除指定檔案或資料夾。 |
+
 ## 🔍 函式細節
 
 ### `folderNames(at:skipsHiddenFiles:)`

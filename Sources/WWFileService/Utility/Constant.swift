@@ -19,19 +19,20 @@ public enum TimeValueType {
     case time(_ time: CMTime)
 }
 
-// 處理影片時的相關錯誤
-public enum VideoError: Error {
+// 處理服務時的相關錯誤
+public enum ServiceError: Error {
     
-    /// 找不到影片軌道
-    case noVideoTrack
+    case noVideoTrack       // 找不到影片軌道
+    case fileNotFound       // 檔案不存在
 }
 
-// MARK: - LocalizedError (VideoError)
-extension VideoError: LocalizedError {
+// MARK: - LocalizedError (ServiceError)
+extension ServiceError: LocalizedError {
     
     public var errorDescription: String? {
         switch self {
-        case .noVideoTrack: return "No video track"
+        case .noVideoTrack: return "Cannot find a video track."
+        case .fileNotFound: return "The file does not exist."
         }
     }
 }

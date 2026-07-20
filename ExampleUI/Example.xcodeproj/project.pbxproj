@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81045473300DD30D00A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 81045472300DD30D00A561BF /* WWFileService */; };
+		81045476300DD7CD00A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 81045475300DD7CD00A561BF /* WWFileService */; };
 		814069C63008C73600BD511B /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 814069C53008C73600BD511B /* WWFileService */; };
-		814069E73008CDB200BD511B /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 814069E63008CDB200BD511B /* WWFileService */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +29,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				814069E73008CDB200BD511B /* WWFileService in Frameworks */,
+				81045476300DD7CD00A561BF /* WWFileService in Frameworks */,
+				81045473300DD30D00A561BF /* WWFileService in Frameworks */,
 				814069C63008C73600BD511B /* WWFileService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,7 +75,8 @@
 			name = Example;
 			packageProductDependencies = (
 				814069C53008C73600BD511B /* WWFileService */,
-				814069E63008CDB200BD511B /* WWFileService */,
+				81045472300DD30D00A561BF /* WWFileService */,
+				81045475300DD7CD00A561BF /* WWFileService */,
 			);
 			productName = Example;
 			productReference = 8177C5772F91CB0F00ACEA3E /* Example.app */;
@@ -104,7 +107,7 @@
 			mainGroup = 8177C56E2F91CB0F00ACEA3E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				814069E53008CDB200BD511B /* XCRemoteSwiftPackageReference "WWFileService" */,
+				81045474300DD7CD00A561BF /* XCRemoteSwiftPackageReference "WWFileService" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8177C5782F91CB0F00ACEA3E /* Products */;
@@ -348,24 +351,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		814069E53008CDB200BD511B /* XCRemoteSwiftPackageReference "WWFileService" */ = {
+		81045474300DD7CD00A561BF /* XCRemoteSwiftPackageReference "WWFileService" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWFileService";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		814069C53008C73600BD511B /* WWFileService */ = {
+		81045472300DD30D00A561BF /* WWFileService */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWFileService;
 		};
-		814069E63008CDB200BD511B /* WWFileService */ = {
+		81045475300DD7CD00A561BF /* WWFileService */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 814069E53008CDB200BD511B /* XCRemoteSwiftPackageReference "WWFileService" */;
+			package = 81045474300DD7CD00A561BF /* XCRemoteSwiftPackageReference "WWFileService" */;
+			productName = WWFileService;
+		};
+		814069C53008C73600BD511B /* WWFileService */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = WWFileService;
 		};
 /* End XCSwiftPackageProductDependency section */

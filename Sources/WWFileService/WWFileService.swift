@@ -134,6 +134,82 @@ public extension WWFileService {
     }
 }
 
+// MARK: - 公開 API (CRUD)
+public extension WWFileService {
+    
+    /// 檢查指定路徑的檔案或資料夾是否存在
+    /// - Parameter url: 要檢查的目標 URL
+    /// - Returns: 若存在則回傳 `true`，否則回傳 `false`
+    static func fileExists(at url: URL) -> Bool {
+        FileManager.default.fileExists(atPath: url.path)
+    }
+    
+    /// 建立資料夾
+    /// - Parameters:
+    ///   - url: 要建立的資料夾 URL
+    ///   - withIntermediateDirectories: 是否自動建立中間層資料夾
+    static func createDirectory(at url: URL, withIntermediateDirectories: Bool = true) throws {
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: withIntermediateDirectories)
+    }
+    
+    /// 將原始資料寫入指定位置
+    /// - Parameters:
+    ///   - data: 要寫入的資料
+    ///   - url: 目的地 URL
+    /// - Note: 使用 `.atomic` 可減少寫入過程中檔案損毀的風險
+    static func write(_ data: Data, to url: URL) throws {
+        try data.write(to: url, options: [.atomic])
+    }
+    
+    /// 將可編碼物件編碼後寫入指定位置
+    /// - Parameters:
+    ///   - value: 要寫入的可編碼物件
+    ///   - url: 目的地 URL
+    ///   - encoder: JSON 編碼器，預設為 `JSONEncoder()`
+    static func write<T: Encodable>(_ value: T, to url: URL, encoder: JSONEncoder = .init()) throws {
+        let data = try encoder.encode(value)
+        try write(data, to: url)
+    }
+    
+    /// 將檔案從原位置移動到新位置
+    /// - Parameters:
+    ///   - url: 原始檔案 URL
+    ///   - newURL: 新位置 URL
+    static func moveItem(at url: URL, to newURL: URL) throws {
+        try FileManager.default.moveItem(at: url, to: newURL)
+    }
+    
+    /// 重新命名檔案
+    /// - Parameters:
+    ///   - url: 原始檔案 URL
+    ///   - newName: 新檔名，需包含副檔名
+    /// - Returns: 重新命名後的新 URL
+    static func renameItem(at url: URL, to newName: String) throws -> URL {
+        
+        let newURL = url.deletingLastPathComponent().appendingPathComponent(newName)
+        try moveItem(at: url, to: newURL)
+        
+        return newURL
+    }
+    
+    /// 複製檔案到指定位置
+    /// - Parameters:
+    ///   - url: 原始檔案 URL
+    ///   - newURL: 複製目的地 URL
+    static func copyItem(at url: URL, to newURL: URL) throws {
+        try FileManager.default.copyItem(at: url, to: newURL)
+    }
+    
+    /// 刪除指定檔案或資料夾
+    /// - Parameter url: 要刪除的目標 URL
+    /// - Throws: `ServiceError.fileNotFound` 當目標不存在時
+    static func deleteItem(at url: URL) throws {
+        
+        guard fileExists(at: url) else { throw ServiceError.fileNotFound }
+        try FileManager.default.removeItem(at: url)
+    }
+}
+
 // MARK: - 公開API (影片)
 public extension WWFileService {
     
@@ -165,7 +241,7 @@ public extension WWFileService {
         try await asset.load(.duration)
         let tracks = try await asset.load(.tracks)
         
-        guard let videoTrack = tracks.first(where: { $0.mediaType == .video }) else { throw VideoError.noVideoTrack }
+        guard let videoTrack = tracks.first(where: { $0.mediaType == .video }) else { throw ServiceError.noVideoTrack }
         
         let naturalSize = try await videoTrack.load(.naturalSize)
         let preferredTransform = try await videoTrack.load(.preferredTransform)
