@@ -63,7 +63,7 @@
 | 名稱 | 回傳值  | 說明 |
 |---|---|---|
 | `videoThumbnail(for:at:maximumSize:preferredTimescale:toleranceBefore:toleranceAfter:)` | `UIImage` | 從影片取得縮圖。 |
-| `videoInformation(for:)` | `UIImage` | 取得影片的長度與尺寸。 |
+| `videoInformation(for:)` | `VideoInfo` | 取得影片的長度與尺寸。 |
 
 ### 音訊
 
