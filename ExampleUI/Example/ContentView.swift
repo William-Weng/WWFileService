@@ -27,10 +27,7 @@ struct ContentView: View {
             .navigationTitle("Files")
             .task {
                 do {
-                    files = try WWFileService.allFileUrls(
-                        at: .documentsDirectory,
-                        skipsHiddenFiles: true
-                    )
+                    files = try WWFileService.allFileUrls(at: .documentsDirectory, skipsHiddenFiles: true)
                 } catch {
                     files = []
                 }

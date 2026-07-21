@@ -152,7 +152,7 @@ public extension WWFileService {
     }
 }
 
-// MARK: - 公開 API (CRUD)
+// MARK: - 公開 API (檔案)
 public extension WWFileService {
     
     /// 檢查指定路徑的檔案或資料夾是否存在
@@ -289,10 +289,36 @@ public extension WWFileService {
         
         let naturalSize = try await videoTrack.load(.naturalSize)
         let preferredTransform = try await videoTrack.load(.preferredTransform)
-        
         let correctedSize = naturalSize.applying(preferredTransform)
-        let durationSeconds = CMTimeGetSeconds(asset.duration)
         
-        return .init(durationSeconds: durationSeconds, size: correctedSize)
+        return .init(durationSeconds: asset.duration.seconds, size: correctedSize)
+    }
+}
+
+// MARK: - 公開API (音訊)
+public extension WWFileService {
+    
+    /// 取得音訊檔案的資訊
+    ///
+    /// 這個方法會讀取音訊檔案的常見 metadata 與技術資訊，包含標題、演出者、專輯名稱、播放長度、取樣率與聲道數
+    ///
+    /// - Parameter url: 音訊檔案的本地 URL
+    /// - Returns: 包含 metadata、音訊長度、取樣率與聲道數的 `AudioInformation``
+    static func audioInformation(for url: URL) async throws -> AudioInformation {
+        
+        let asset = AVURLAsset(url: url)
+        let audioFile = try AVAudioFile(forReading: url)
+
+        let duration = try await asset.load(.duration)
+        let metadata = try await asset.load(.commonMetadata)
+        
+        let sampleRate = audioFile.fileFormat.sampleRate
+        let channelCount = audioFile.fileFormat.channelCount
+        
+        let title = metadata.firstMetadataString(for: .commonIdentifierTitle)
+        let artist = metadata.firstMetadataString(for: .commonIdentifierArtist)
+        let albumTitle = metadata.firstMetadataString(for: .commonIdentifierAlbumName)
+        
+        return .init(title: title, artist: artist, albumTitle: albumTitle, durationSeconds: duration.seconds, sampleRate: sampleRate, channelCount: channelCount)
     }
 }

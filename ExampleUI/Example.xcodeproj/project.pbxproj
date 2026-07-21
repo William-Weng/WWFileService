@@ -10,7 +10,8 @@
 		81045473300DD30D00A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 81045472300DD30D00A561BF /* WWFileService */; };
 		81045482300DEB0D00A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 81045481300DEB0D00A561BF /* WWFileService */; };
 		810454DC300E20ED00A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 810454DB300E20ED00A561BF /* WWFileService */; };
-		810454E9300E2AA600A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 810454E8300E2AA600A561BF /* WWFileService */; };
+		811DC363300F204600DFDD69 /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 811DC362300F204600DFDD69 /* WWFileService */; };
+		811DC366300F3E2F00DFDD69 /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 811DC365300F3E2F00DFDD69 /* WWFileService */; };
 		814069C63008C73600BD511B /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 814069C53008C73600BD511B /* WWFileService */; };
 /* End PBXBuildFile section */
 
@@ -31,11 +32,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811DC366300F3E2F00DFDD69 /* WWFileService in Frameworks */,
 				810454DC300E20ED00A561BF /* WWFileService in Frameworks */,
 				81045482300DEB0D00A561BF /* WWFileService in Frameworks */,
 				81045473300DD30D00A561BF /* WWFileService in Frameworks */,
 				814069C63008C73600BD511B /* WWFileService in Frameworks */,
-				810454E9300E2AA600A561BF /* WWFileService in Frameworks */,
+				811DC363300F204600DFDD69 /* WWFileService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +84,8 @@
 				81045472300DD30D00A561BF /* WWFileService */,
 				81045481300DEB0D00A561BF /* WWFileService */,
 				810454DB300E20ED00A561BF /* WWFileService */,
-				810454E8300E2AA600A561BF /* WWFileService */,
+				811DC362300F204600DFDD69 /* WWFileService */,
+				811DC365300F3E2F00DFDD69 /* WWFileService */,
 			);
 			productName = Example;
 			productReference = 8177C5772F91CB0F00ACEA3E /* Example.app */;
@@ -113,7 +116,7 @@
 			mainGroup = 8177C56E2F91CB0F00ACEA3E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				810454E7300E2AA600A561BF /* XCRemoteSwiftPackageReference "WWFileService" */,
+				811DC364300F3E2F00DFDD69 /* XCRemoteSwiftPackageReference "WWFileService" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8177C5782F91CB0F00ACEA3E /* Products */;
@@ -357,12 +360,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		810454E7300E2AA600A561BF /* XCRemoteSwiftPackageReference "WWFileService" */ = {
+		811DC364300F3E2F00DFDD69 /* XCRemoteSwiftPackageReference "WWFileService" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWFileService";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.2;
+				minimumVersion = 1.2.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -380,9 +383,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWFileService;
 		};
-		810454E8300E2AA600A561BF /* WWFileService */ = {
+		811DC362300F204600DFDD69 /* WWFileService */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 810454E7300E2AA600A561BF /* XCRemoteSwiftPackageReference "WWFileService" */;
+			productName = WWFileService;
+		};
+		811DC365300F3E2F00DFDD69 /* WWFileService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 811DC364300F3E2F00DFDD69 /* XCRemoteSwiftPackageReference "WWFileService" */;
 			productName = WWFileService;
 		};
 		814069C53008C73600BD511B /* WWFileService */ = {

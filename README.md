@@ -38,18 +38,12 @@
 | `folderNames(at:skipsHiddenFiles:)` | `[String]` | 第一層 | 只取資料夾 | 讀取指定資料夾底下的第一層子資料夾名稱，並排序。 |
 | `fileUrls(at:allowedExtensions:skipsHiddenFiles:)` | `[URL]` | 第一層 | 一般檔案 + 副檔名 | 讀取指定資料夾底下符合副檔名條件的檔案 URL。 |
 | `fileNames(at:allowedExtensions:skipsHiddenFiles:)` | `[String]` | 第一層 | 一般檔案 + 副檔名 | 讀取指定資料夾底下符合條件的檔名。 |
+| `fileItem(at:allowedExtensions:skipsHiddenFiles:)` | `FileServiceItem?` | 單一檔案 | 一般檔案 + 副檔名 | 讀取指定檔案的資訊；若符合條件則回傳 URL、建立時間與檔案大小，否則回傳 nil。 |
 | `fileItems(at:allowedExtensions:skipsHiddenFiles:)` | `[FileServiceItem]` | 第一層 | 一般檔案 + 副檔名 | 讀取指定資料夾底下符合條件的檔案資訊，包含 URL、建立時間、檔案大小。 |
 | `allFileUrls(at:skipsHiddenFiles:)` | `[URL]` | 遞迴 | 一般檔案 | 遞迴掃描指定資料夾與所有子資料夾，回傳所有一般檔案 URL。 |
 | `allFileItems(at:skipsHiddenFiles:)` | `[FileServiceItem]` | 遞迴 | 一般檔案 | 遞迴掃描指定資料夾與所有子資料夾，回傳所有一般檔案資訊。 |
 
-### 影片
-
-| 名稱 | 回傳值  | 說明 |
-|---|---|---|
-| `videoThumbnail(for:at:maximumSize:preferredTimescale:toleranceBefore:toleranceAfter:)` | `UIImage` | 從影片取得縮圖。 |
-| `videoInformation(for:)` | `UIImage` | 取得影片的長度與尺寸。 |
-
-### CRUD
+### 檔案
 
 | 名稱 | 回傳值 | 說明 |
 |---|---|---|
@@ -63,6 +57,19 @@
 | `renameItem(at:to:)` | `URL` | 重新命名檔案，並回傳新的 URL。 |
 | `copyItem(at:to:)` | `Void` | 複製檔案到指定位置。 |
 | `deleteItem(at:)` | `Void` | 刪除指定檔案或資料夾。 |
+
+### 視訊
+
+| 名稱 | 回傳值  | 說明 |
+|---|---|---|
+| `videoThumbnail(for:at:maximumSize:preferredTimescale:toleranceBefore:toleranceAfter:)` | `UIImage` | 從影片取得縮圖。 |
+| `videoInformation(for:)` | `UIImage` | 取得影片的長度與尺寸。 |
+
+### 音訊
+
+| 名稱 | 回傳值  | 說明 |
+|---|---|---|
+| `audioInformation(for:)` | `AudioInformation` | 取得音訊檔案的資訊。 |
 
 ## 🔍 函式細節
 

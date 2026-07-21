@@ -8,6 +8,13 @@
 import Foundation
 import AVFoundation
 
+extension Array where Element == AVMetadataItem {
+    
+    func firstMetadataString(for identifier: AVMetadataIdentifier) -> String? {
+        first { $0.identifier == identifier }?.stringValue
+    }
+}
+
 // MARK: - FileManager
 extension FileManager {
     
